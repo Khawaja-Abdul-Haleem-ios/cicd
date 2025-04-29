@@ -15,9 +15,19 @@
 
 default_platform(:ios)
 
+app_store_connect_api_key(
+  key_id: "Z9L46VG577",
+  issuer_id: "89f08ee0-08b1-440f-a90a-f2bdbb4b32e0",
+  key_filepath: "fastlane/AuthKey_Z9L46VG577.p8",
+  in_house: false
+)
+
 platform :ios do
-  desc "Description of what the lane does"
-  lane :custom_lane do
-    # add actions here: https://docs.fastlane.tools/actions
+  desc "Push a new beta build to TestFlight"
+  lane :beta do
+    build_app(scheme: "CICD",  # replace with your scheme
+    export_method: "app-store"
+    )
+    upload_to_testflight
   end
 end
