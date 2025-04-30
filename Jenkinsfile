@@ -11,7 +11,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 echo "🔄 Checking out branch: ${env.BRANCH_NAME}"
-                checkout scm
+                git credentialsId: '0dae4b11-d489-4f03-a4df-070facbd0a17', url: 'https://github.com/Khawaja-Abdul-Haleem-ios/cicd.git', branch: 'main'
             }
         }
 
