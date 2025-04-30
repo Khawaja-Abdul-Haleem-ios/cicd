@@ -26,7 +26,7 @@ platform :ios do
   desc "Push a new beta build to TestFlight"
   lane :beta do
     build_app(scheme: "CICD",  # replace with your scheme
-    export_method: "app-store"
+    export_method: "app-store-connect"
     )
     upload_to_testflight
   end
