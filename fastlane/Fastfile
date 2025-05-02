@@ -25,8 +25,9 @@ app_store_connect_api_key(
 platform :ios do
   desc "Push a new beta build to TestFlight"
   lane :beta do
-    build_app(scheme: "CICD",  # replace with your scheme
-    export_method: "app-store"
+    build_app(
+      scheme: "CICD",
+      export_method: "app-store"
     )
     upload_to_testflight
   end

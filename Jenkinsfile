@@ -15,41 +15,34 @@ pipeline {
             }
         }
 
-        stage('Build') {
-            when {
-                branch 'main'
-            }
+        stage('Install Dependencies') {
             steps {
-                echo "🛠️ Building the iOS project..."
-                sh """
-                xcodebuild clean build \
-                -project ${PROJECT_NAME}.xcodeproj \
-                -scheme ${SCHEME} \
-                -destination '${DESTINATION}' \
-                CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
-                """
+                echo "📦 Installing dependencies (brew, fastlane, etc.)..."
+                sh '''
+                which brew || (echo "❌ Homebrew not found. Please install it manually.")
+                brew install fastlane || true
+                '''
             }
         }
 
-   stage('Deploy to TestFlight') {
+        stage('Build & Archive') {
             when {
                 branch 'main'
             }
             steps {
-                echo "🚀 Uploading build to TestFlight..."
-                // If you're using Bundler, replace with: bundle exec fastlane beta
+                echo "🛠️ Building and archiving the iOS project..."
                 sh 'fastlane beta'
             }
         }
-
     }
 
     post {
         success {
-            echo "✅ Build succeeded for ${env.BRANCH_NAME}"
+            echo "✅ Build and upload to TestFlight succeeded on ${env.BRANCH_NAME}"
         }
         failure {
-            echo "❌ Build failed on ${env.BRANCH_NAME}"
+            echo "❌ Build or upload failed on ${env.BRANCH_NAME}"
         }
     }
 }
+
