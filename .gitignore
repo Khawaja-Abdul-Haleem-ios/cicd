@@ -1,1 +1,3 @@
+*.zip
+*.ipa
 fastlane/AuthKey_*.p8
