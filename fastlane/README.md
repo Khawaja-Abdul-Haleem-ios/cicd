@@ -15,29 +15,13 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 ## iOS
 
-### ios beta_internal
-
-```sh
-[bundle exec] fastlane ios beta_internal
-```
-
-Run internal beta distribution
-
-### ios beta_external
-
-```sh
-[bundle exec] fastlane ios beta_external
-```
-
-Run external beta distribution
-
 ### ios beta
 
 ```sh
 [bundle exec] fastlane ios beta
 ```
 
-Choose between internal or external test distribution
+Distribute to both internal and external testers
 
 ----
 
