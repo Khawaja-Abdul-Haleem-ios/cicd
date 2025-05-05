@@ -7,6 +7,10 @@ pipeline {
         DESTINATION = "generic/platform=iOS"
     }
 
+    parameters {
+        choice(name: 'TEST_TYPE', choices: ['internal', 'external'], description: 'Choose test distribution type')
+    }
+
     stages {
         stage('Checkout') {
             steps {
@@ -30,8 +34,9 @@ pipeline {
                 branch 'main'
             }
             steps {
-                echo "🛠️ Building and archiving the iOS project..."
-                sh 'fastlane beta'
+                echo "🛠️ Building and archiving the iOS project for ${params.TEST_TYPE} testers..."
+                sh "export TEST_TYPE=${params.TEST_TYPE} && fastlane beta"
+
             }
         }
     }
@@ -45,4 +50,3 @@ pipeline {
         }
     }
 }
-

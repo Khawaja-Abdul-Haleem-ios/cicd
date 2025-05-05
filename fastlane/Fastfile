@@ -23,12 +23,35 @@ app_store_connect_api_key(
 )
 
 platform :ios do
-  desc "Push a new beta build to TestFlight"
+
+  desc "Distribute to both internal and external testers"
   lane :beta do
     build_app(
       scheme: "CICD",
       export_method: "app-store"
     )
-    upload_to_testflight
+
+    # Distribute to internal testers
+    upload_to_testflight(
+      distribute_external: false,
+      groups: ["Internal"]
+    )
+
+    # Attempt to distribute to external testers
+    begin
+      upload_to_testflight(
+        distribute_external: true,
+        groups: ["External"],
+        beta_app_description: "This is a beta build for external testers.",
+        beta_app_feedback_email: "shames.asghar@hypernymbiz.com"
+      )
+
+      submit_for_review(
+        automatic_release: true
+      )
+    rescue => error
+      UI.important("⚠️ Could not submit for external review: #{error.message}")
+      UI.important("🔁 Likely because another build is still in review. Try again later.")
+    end
   end
 end
