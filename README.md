@@ -64,7 +64,7 @@ Submit for App Store review
 ✅ Requirements
 Before running:
 
-Add your .p8 API key to fastlane/AuthKey_Z9L46VG577.p8
+Add your .p8 API key to fastlane/YOURAUTHKEY.p8
 
 Ensure provisioning profiles and certificates are valid
 
